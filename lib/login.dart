@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+import 'login_controller.dart';
 
-  @override
-  State<Login> createState() => _LoginState();
-}
+class Login extends StatelessWidget {
 
-class _LoginState extends State<Login> {
+  LoginController _controller = LoginController();
+
+  Login({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,17 +19,27 @@ class _LoginState extends State<Login> {
           children: [
             Center(child: Icon(Icons.people, size: 100,)),
             TextField(
+              onChanged: _controller.setLogin,
               decoration: InputDecoration(
-                label: Text('Login')
+                  label: Text('Login')
               ),
             ),
             TextField(
+              onChanged: _controller.setPass,
               obscureText: true,
               decoration: InputDecoration(
-                label: Text('Password')
+                  label: Text('Password')
               ),
             ),
-            ElevatedButton(onPressed: (){}, child: Text('Login'))
+            ElevatedButton(onPressed: (){
+_controller.auth().then((result){
+  if(result){
+    print('lucas');
+  }else{
+    print('error');
+  }
+});
+            }, child: Text('Login'))
           ],
         ),
       ),
